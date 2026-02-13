@@ -22,6 +22,15 @@ const planetMessages = {
     }
 };
 
+// Early autoplay attempt
+window.addEventListener('DOMContentLoaded', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    if (bgMusic) {
+        bgMusic.volume = 0.2;
+        bgMusic.play().catch(e => console.log('Early autoplay blocked'));
+    }
+});
+
 window.addEventListener('load', () => {
     setTimeout(() => {
         gsap.to('#loader', {
@@ -30,6 +39,11 @@ window.addEventListener('load', () => {
             onComplete: () => {
                 document.getElementById('loader').style.display = 'none';
                 initAnimations();
+                // Try autoplay again after loader
+                const bgMusic = document.getElementById('bgMusic');
+                if (bgMusic && bgMusic.paused) {
+                    bgMusic.play().catch(e => console.log('Autoplay blocked after loader'));
+                }
             }
         });
     }, 1500);
@@ -41,6 +55,38 @@ function initAudio() {
     const musicIcon = document.getElementById('musicIcon');
 
     bgMusic.volume = 0.2;
+    
+    // Attempt autoplay immediately
+    const attemptPlay = () => {
+        bgMusic.play().then(() => {
+            isPlaying = true;
+            musicIcon.textContent = '🔊';
+            musicToggle.classList.add('bg-pink-500/30');
+            console.log('Music playing');
+        }).catch(e => {
+            console.log('Autoplay blocked, will try on interaction');
+            musicIcon.textContent = '🎵';
+        });
+    };
+    
+    attemptPlay();
+
+    // Fallback: play on first interaction
+    const startOnInteraction = () => {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            isPlaying = true;
+            musicIcon.textContent = '🔊';
+            musicToggle.classList.add('bg-pink-500/30');
+        }
+        document.removeEventListener('click', startOnInteraction);
+        document.removeEventListener('touchstart', startOnInteraction);
+        document.removeEventListener('scroll', startOnInteraction);
+    };
+    
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('touchstart', startOnInteraction);
+    document.addEventListener('scroll', startOnInteraction);
 
     musicToggle.addEventListener('click', () => {
         if (isPlaying) {
@@ -48,7 +94,7 @@ function initAudio() {
             musicIcon.textContent = '🎵';
             musicToggle.classList.remove('bg-pink-500/30');
         } else {
-            bgMusic.play().catch(e => console.log('Audio play failed:', e));
+            bgMusic.play();
             musicIcon.textContent = '🔊';
             musicToggle.classList.add('bg-pink-500/30');
         }
