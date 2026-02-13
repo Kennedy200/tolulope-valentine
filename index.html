@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Tolulope - My Eternal Constellation</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1;400&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-heart"></div>
+        <p class="mt-8 text-2xl md:text-3xl font-dancing text-pink-400">Loading Tolulope's Universe...</p>
+        <p class="mt-2 text-pink-300/60 font-playfair text-xs md:text-sm">Preparing something magical</p>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bgMusic" loop>
+        <source src="bg-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Three.js Canvas Background -->
+    <canvas id="starfield"></canvas>
+
+    <!-- Scrolling Train Indicator -->
+    <div id="scrollTrain" class="scroll-train">
+        <div class="train-body">🚂</div>
+        <div class="train-smoke"></div>
+    </div>
+
+    <!-- Planet Message Modal -->
+    <div id="planetModal" class="planet-modal">
+        <div class="planet-modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modalTitle" class="font-great text-3xl md:text-4xl text-gradient-pink mb-4"></h3>
+            <p id="modalMessage" class="font-playfair text-base md:text-lg text-pink-100/90 leading-relaxed"></p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-strong px-4 md:px-6 py-3 md:py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="font-dancing text-xl md:text-3xl text-gradient-pink cursor-pointer" onclick="scrollToSection('hero')">Tolulope's Cosmos</div>
+            <div class="flex items-center gap-2 md:gap-6">
+                <button id="musicToggle" class="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 rounded-full glass hover:bg-pink-500/20 transition-all text-xs md:text-base">
+                    <span id="musicIcon">🎵</span>
+                    <span class="font-playfair hidden sm:inline">Our Song</span>
+                </button>
+                <div class="hidden md:flex gap-6 text-sm font-playfair">
+                    <a href="#hero" class="hover:text-pink-400 transition-colors">Home</a>
+                    <a href="#universe" class="hover:text-pink-400 transition-colors">Universe</a>
+                    <a href="#journey" class="hover:text-pink-400 transition-colors">Journey</a>
+                    <a href="#memories" class="hover:text-pink-400 transition-colors">Memories</a>
+                    <a href="#tolulope" class="hover:text-pink-400 transition-colors">Her Name</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+        <div class="absolute inset-0 z-0">
+            <div class="shooting-star" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+            <div class="shooting-star" style="top: 30%; left: 80%; animation-delay: 3s;"></div>
+            <div class="shooting-star" style="top: 70%; left: 20%; animation-delay: 6s;"></div>
+        </div>
+
+        <div class="cloud" style="width: 150px; height: 45px; top: 15%; animation-duration: 120s;"></div>
+        <div class="cloud" style="width: 100px; height: 30px; top: 65%; animation-duration: 150s; animation-delay: -40s;"></div>
+
+        <div class="space-shuttle">
+            <div class="shuttle-body">
+                <div class="shuttle-nose"></div>
+                <div class="shuttle-window"></div>
+                <div class="shuttle-wing left"></div>
+                <div class="shuttle-wing right"></div>
+            </div>
+            <div class="shuttle-flame"></div>
+        </div>
+
+        <div class="love-blimp">
+            <div class="blimp-body">
+                <div class="blimp-text">I LOVE YOU SO MUCH</div>
+                <div class="blimp-ropes"></div>
+            </div>
+            <div class="blimp-gondola"></div>
+        </div>
+
+        <div class="relative z-10 text-center max-w-6xl mx-auto pt-20">
+            <div class="mb-8 md:mb-12 float-slow">
+                <div class="w-24 h-24 md:w-40 md:h-40 mx-auto rounded-full bg-gradient-to-br from-pink-400 via-purple-500 to-pink-600 glow-pink flex items-center justify-center text-4xl md:text-7xl relative">
+                    <span class="relative z-10">🌙</span>
+                    <div class="absolute inset-0 rounded-full bg-pink-500/30 animate-ping"></div>
+                    <div class="absolute -inset-2 md:-inset-4 rounded-full border-2 border-pink-400/30 animate-pulse"></div>
+                </div>
+            </div>
+            
+            <h1 class="font-great text-5xl md:text-7xl lg:text-9xl mb-6 md:mb-8 text-gradient-pink leading-tight px-2" id="heroTitle">
+                My Eternal Constellation
+            </h1>
+            
+            <p class="font-playfair text-lg md:text-2xl lg:text-3xl text-pink-200 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed opacity-0 px-4" id="heroSubtitle">
+                In the vast universe of my heart, <span class="text-gradient-gold font-dancing">Tolulope</span> is the brightest star.
+            </p>
+
+            <div class="flex justify-center gap-4 opacity-0 px-4" id="heroButtons">
+                <button onclick="scrollToSection('universe')" class="px-6 py-3 md:px-10 md:py-5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 text-white font-playfair text-base md:text-xl hover:scale-105 transition-transform glow-pink">
+                    Explore Our Universe ✨
+                </button>
+            </div>
+
+            <div class="mt-8 md:mt-16 flex justify-center gap-2 opacity-0" id="audioVisualizer"></div>
+            
+            <p class="mt-6 md:mt-8 font-dancing text-lg md:text-xl text-pink-300/80 opacity-0 px-4" id="scrollHint">Scroll to begin our journey...</p>
+        </div>
+
+        <div class="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 md:w-10 md:h-10 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Solar System Section -->
+    <section id="universe" class="min-h-screen py-16 md:py-24 relative px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-great text-4xl md:text-6xl lg:text-7xl text-center text-gradient-gold mb-12 md:mb-20">
+                Our Solar System of Love
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                <div class="space-y-4 md:space-y-6 order-2 md:order-1">
+                    <div class="glass-strong p-4 md:p-8 rounded-2xl md:rounded-3xl transform hover:scale-105 transition-all duration-500 group planet-card" data-planet="Mercury">
+                        <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 shadow-lg"></div>
+                            <div>
+                                <h3 class="font-playfair text-lg md:text-2xl text-pink-300">Mercury</h3>
+                                <p class="text-xs text-pink-200/60">Swift & Close</p>
+                            </div>
+                        </div>
+                        <p class="text-pink-100/80 text-sm md:text-base leading-relaxed">Closest to my heart, always orbiting your gravity.</p>
+                    </div>
+
+                    <div class="glass-strong p-4 md:p-8 rounded-2xl md:rounded-3xl transform hover:scale-105 transition-all duration-500 group glow-pink planet-card" data-planet="Venus">
+                        <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-yellow-200 to-orange-400 shadow-lg"></div>
+                            <div>
+                                <h3 class="font-playfair text-lg md:text-2xl text-pink-300">Venus</h3>
+                                <p class="text-xs text-pink-200/60">Bright & Beautiful</p>
+                            </div>
+                        </div>
+                        <p class="text-pink-100/80 text-sm md:text-base leading-relaxed">The brightest planet, just like your smile.</p>
+                    </div>
+
+                    <div class="glass-strong p-4 md:p-8 rounded-2xl md:rounded-3xl transform hover:scale-105 transition-all duration-500 group planet-card" data-planet="Earth">
+                        <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-blue-400 to-green-500 shadow-lg"></div>
+                            <div>
+                                <h3 class="font-playfair text-lg md:text-2xl text-pink-300">Earth</h3>
+                                <p class="text-xs text-pink-200/60">Home & Life</p>
+                            </div>
+                        </div>
+                        <p class="text-pink-100/80 text-sm md:text-base leading-relaxed">Where our love takes root and flourishes.</p>
+                    </div>
+
+                    <div class="glass-strong p-4 md:p-8 rounded-2xl md:rounded-3xl transform hover:scale-105 transition-all duration-500 group planet-card" data-planet="Mars">
+                        <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-red-500 to-red-800 shadow-lg"></div>
+                            <div>
+                                <h3 class="font-playfair text-lg md:text-2xl text-pink-300">Mars</h3>
+                                <p class="text-xs text-pink-200/60">Passion & Fire</p>
+                            </div>
+                        </div>
+                        <p class="text-pink-100/80 text-sm md:text-base leading-relaxed">The red fire of passion burns eternally for you.</p>
+                    </div>
+                </div>
+
+                <div class="relative h-[300px] md:h-[600px] flex items-center justify-center order-1 md:order-2">
+                    <div id="solarSystem" class="w-full h-full"></div>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="text-center opacity-0" id="eclipseText">
+                            <h3 class="font-great text-3xl md:text-5xl text-gradient-gold mb-1 md:mb-2">Total Eclipse</h3>
+                            <p class="font-playfair text-pink-200 text-sm md:text-lg">When our worlds align</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Timeline Section -->
+    <section id="journey" class="min-h-screen py-16 md:py-24 relative px-4">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-great text-4xl md:text-6xl lg:text-7xl text-center text-gradient-pink mb-12 md:mb-16">
+                Our Journey Through Time
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <div class="space-y-6 md:space-y-8">
+                    <div class="timeline-item">
+                        <h3 class="font-playfair text-xl md:text-2xl text-pink-300 mb-2">The First Meeting</h3>
+                        <p class="text-pink-100/70 text-sm md:text-base leading-relaxed">Like a meteor striking the atmosphere, you entered my life in a blaze of light.</p>
+                        <span class="text-xs md:text-sm text-pink-400/60 font-dancing mt-2 block">The Beginning</span>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3 class="font-playfair text-xl md:text-2xl text-pink-300 mb-2">First Constellation</h3>
+                        <p class="text-pink-100/70 text-sm md:text-base leading-relaxed">We traced patterns in the night sky, connecting stars to form our own mythology.</p>
+                        <span class="text-xs md:text-sm text-pink-400/60 font-dancing mt-2 block">Starlight Memories</span>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3 class="font-playfair text-xl md:text-2xl text-pink-300 mb-2">The Eclipse</h3>
+                        <p class="text-pink-100/70 text-sm md:text-base leading-relaxed">When challenges came like shadows crossing the sun, we stood together.</p>
+                        <span class="text-xs md:text-sm text-pink-400/60 font-dancing mt-2 block">Standing Strong</span>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3 class="font-playfair text-xl md:text-2xl text-pink-300 mb-2">Infinite Future</h3>
+                        <p class="text-pink-100/70 text-sm md:text-base leading-relaxed">Now we orbit each other in perfect harmony, bound by love stronger than gravity.</p>
+                        <span class="text-xs md:text-sm text-pink-400/60 font-dancing mt-2 block">Forever</span>
+                    </div>
+                </div>
+
+                <div class="relative mt-8 md:mt-0">
+                    <div class="md:sticky md:top-32">
+                        <div class="glass-strong p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+                            <div class="w-20 h-20 md:w-32 md:h-32 mx-auto mb-4 md:mb-6 rounded-full bg-gradient-to-br from-pink-400 to-purple-600 flex items-center justify-center text-3xl md:text-5xl float-anim">
+                                💫
+                            </div>
+                            <h3 class="font-great text-3xl md:text-4xl text-gradient-gold mb-4">Timeless Love</h3>
+                            <p class="font-playfair text-pink-200/80 text-sm md:text-base italic">"In an infinite universe, our paths crossed. I choose you, Tolulope, again and again."</p>
+                            
+                            <div class="mt-4 md:mt-6 grid grid-cols-3 gap-2 md:gap-4 text-center">
+                                <div class="glass p-2 md:p-3 rounded-xl">
+                                    <div class="text-xl md:text-2xl font-bold text-pink-400">∞</div>
+                                    <div class="text-xs text-pink-300/60">Years</div>
+                                </div>
+                                <div class="glass p-2 md:p-3 rounded-xl">
+                                    <div class="text-xl md:text-2xl font-bold text-pink-400">∞</div>
+                                    <div class="text-xs text-pink-300/60">Stars</div>
+                                </div>
+                                <div class="glass p-2 md:p-3 rounded-xl">
+                                    <div class="text-xl md:text-2xl font-bold text-pink-400">1</div>
+                                    <div class="text-xs text-pink-300/60">Heart</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories" class="min-h-screen py-16 md:py-24 relative overflow-hidden px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-great text-4xl md:text-6xl lg:text-7xl text-center text-gradient-pink mb-4">
+                Memories in Constellation
+            </h2>
+            <p class="text-center text-pink-200 font-playfair text-base md:text-xl mb-12 md:mb-16">Every moment with you is a star in my sky</p>
+
+            <div class="flex flex-col lg:flex-row items-center gap-8 md:gap-12">
+                <div class="photo-v-container w-full lg:flex-1" id="photoVContainer"></div>
+
+                <div class="w-full lg:w-1/3 space-y-4 md:space-y-6">
+                    <div class="glass-strong p-6 md:p-8 rounded-2xl md:rounded-3xl relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 md:w-40 md:h-40 bg-pink-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                        
+                        <h3 class="font-great text-3xl md:text-4xl text-gradient-pink mb-4 md:mb-6">My Dearest Tolulope</h3>
+                        
+                        <div class="space-y-2 md:space-y-4 font-playfair text-base md:text-lg text-pink-100/90 leading-relaxed" id="loveText">
+                            <p class="love-line opacity-0 translate-x-10">You are the moon to my night sky,</p>
+                            <p class="love-line opacity-0 translate-x-10">illuminating every darkness.</p>
+                            <p class="love-line opacity-0 translate-x-10">Like stars across the cosmos,</p>
+                            <p class="love-line opacity-0 translate-x-10">my love for you is infinite.</p>
+                            <p class="love-line opacity-0 translate-x-10">I would choose you across every lifetime,</p>
+                            <p class="love-line opacity-0 translate-x-10 font-dancing text-lg md:text-xl text-pink-300">in every galaxy, until the end of time.</p>
+                        </div>
+
+                        <div class="mt-6 md:mt-8 flex items-center justify-center gap-2 md:gap-3 text-pink-400">
+                            <span class="heartbeat text-2xl md:text-3xl">❤️</span>
+                            <span class="font-dancing text-xl md:text-2xl">Forever Yours</span>
+                            <span class="heartbeat text-2xl md:text-3xl">❤️</span>
+                        </div>
+                    </div>
+
+                    <div class="glass p-4 md:p-6 rounded-xl md:rounded-2xl">
+                        <svg width="100%" height="120" viewBox="0 0 400 120" id="constellationSvg"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOLULOPE Name Section -->
+    <section id="tolulope" class="min-h-screen py-16 md:py-24 relative overflow-hidden bg-gradient-to-b from-transparent via-pink-900/20 to-transparent px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="font-great text-3xl md:text-5xl lg:text-6xl text-gradient-pink mb-4 md:mb-8">
+                The Center of My Universe
+            </h2>
+            
+            <p class="font-playfair text-base md:text-xl text-pink-200/80 mb-8 md:mb-12 max-w-2xl mx-auto px-2">
+                Watch as the planets align to spell the most beautiful name...
+            </p>
+
+            <div class="tolulope-container" id="tolulopeCanvas"></div>
+
+            <button id="alignPlanetsBtn" class="px-6 py-3 md:px-8 md:py-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-playfair text-sm md:text-lg hover:scale-110 transition-transform glow-pink z-20">
+                Align the Stars for Tolulope ✨
+            </button>
+
+            <div class="mt-8 md:mt-16 glass-strong p-6 md:p-8 rounded-2xl md:rounded-3xl max-w-2xl mx-auto opacity-0" id="finalMessage">
+                <h3 class="font-great text-4xl md:text-5xl text-gradient-gold mb-2 md:mb-4">Tolulope</h3>
+                <p class="font-dancing text-xl md:text-2xl text-pink-300 mb-3 md:mb-4">My Everything</p>
+                <p class="font-playfair text-pink-100/80 text-sm md:text-base leading-relaxed">
+                    Every letter of your name is written in stardust. You are the gravity that holds my world together.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love Letter Section -->
+    <section id="love" class="min-h-screen py-16 md:py-24 relative flex items-center px-4">
+        <div class="max-w-4xl mx-auto w-full">
+            <div class="glass-strong p-6 md:p-12 rounded-2xl md:rounded-3xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 md:h-2 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 w-full h-1 md:h-2 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+                
+                <div class="text-center mb-6 md:mb-8">
+                    <div class="inline-block p-3 md:p-4 rounded-full bg-pink-500/20 mb-3 md:mb-4 float-anim">
+                        <span class="text-2xl md:text-4xl">💌</span>
+                    </div>
+                    <h2 class="font-great text-4xl md:text-6xl text-gradient-pink">My Valentine</h2>
+                </div>
+
+                <div class="prose prose-sm md:prose-lg mx-auto text-pink-100/90 font-playfair space-y-4 md:space-y-6 leading-relaxed">
+                    <p class="first-letter:text-4xl md:first-letter:text-6xl first-letter:font-great first-letter:text-pink-400 first-letter:float-left first-letter:mr-3">
+                        My dearest Tolulope, you have transformed my life into something magical. Like a constellation guiding travelers home, you have been my light through every storm.
+                    </p>
+                    
+                    <p class="text-sm md:text-base">Your favorite song plays softly, and with every note, I am transported to moments we've shared—the laughter, the tears, the quiet embraces.</p>
+
+                    <div class="my-6 md:my-8 p-4 md:p-6 glass rounded-xl md:rounded-2xl text-center">
+                        <p class="font-great text-xl md:text-3xl text-gradient-gold">
+                            "I love you to the moon and back,<br>
+                            across every star,<br>
+                            forever and always,<br>
+                            my Tolulope."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 md:mt-10 text-center">
+                    <button onclick="createGrandFinale()" class="px-6 py-3 md:px-10 md:py-5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 text-white font-playfair text-base md:text-xl hover:scale-110 transition-transform glow-pink">
+                        Celebrate Our Love 🚀
+                    </button>
+                </div>
+
+                <div class="mt-6 md:mt-8 text-center font-great text-2xl md:text-4xl text-pink-400">
+                    With All My Love,<br>
+                    <span class="text-gradient-gold">Your Forever Valentine</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 md:py-10 text-center glass-strong px-4">
+        <p class="font-great text-xl md:text-3xl text-pink-300 mb-1 md:mb-2">Made with Infinite Love for Tolulope</p>
+        <p class="text-pink-400/60 text-xs md:text-sm font-playfair">© 2025 Our Constellation | Forever & Always</p>
+        <div class="flex justify-center gap-2 mt-2 md:mt-4">
+            <span class="text-pink-500">❤️</span>
+            <span class="text-purple-500">💜</span>
+            <span class="text-pink-500">❤️</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
